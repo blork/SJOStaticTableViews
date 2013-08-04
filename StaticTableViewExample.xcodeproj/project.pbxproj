@@ -22,6 +22,11 @@
 		225005CE17AED9AD0025723B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225005B217AED9AD0025723B /* CoreData.framework */; };
 		225005D617AED9AD0025723B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 225005D417AED9AD0025723B /* InfoPlist.strings */; };
 		225005D817AED9AD0025723B /* StaticTableViewExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 225005D717AED9AD0025723B /* StaticTableViewExampleTests.m */; };
+		225005E317AED9D00025723B /* ExampleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 225005E217AED9D00025723B /* ExampleTableViewController.m */; };
+		225005E617AEDA220025723B /* SJOStaticTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 225005E517AEDA220025723B /* SJOStaticTableViewDataSource.m */; };
+		225005E917AEDD4E0025723B /* SJOStaticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 225005E817AEDD4E0025723B /* SJOStaticCell.m */; };
+		225005EC17AEE0C60025723B /* SJOStaticSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 225005EB17AEE0C60025723B /* SJOStaticSection.m */; };
+		225005EF17AEE93D0025723B /* ExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 225005EE17AEE93D0025723B /* ExampleViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,16 @@
 		225005D317AED9AD0025723B /* StaticTableViewExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StaticTableViewExampleTests-Info.plist"; sourceTree = "<group>"; };
 		225005D517AED9AD0025723B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		225005D717AED9AD0025723B /* StaticTableViewExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaticTableViewExampleTests.m; sourceTree = "<group>"; };
+		225005E117AED9D00025723B /* ExampleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleTableViewController.h; sourceTree = "<group>"; };
+		225005E217AED9D00025723B /* ExampleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleTableViewController.m; sourceTree = "<group>"; };
+		225005E417AEDA220025723B /* SJOStaticTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJOStaticTableViewDataSource.h; sourceTree = "<group>"; };
+		225005E517AEDA220025723B /* SJOStaticTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJOStaticTableViewDataSource.m; sourceTree = "<group>"; };
+		225005E717AEDD4E0025723B /* SJOStaticCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJOStaticCell.h; sourceTree = "<group>"; };
+		225005E817AEDD4E0025723B /* SJOStaticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJOStaticCell.m; sourceTree = "<group>"; };
+		225005EA17AEE0C60025723B /* SJOStaticSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJOStaticSection.h; sourceTree = "<group>"; };
+		225005EB17AEE0C60025723B /* SJOStaticSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJOStaticSection.m; sourceTree = "<group>"; };
+		225005ED17AEE93D0025723B /* ExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleViewController.h; sourceTree = "<group>"; };
+		225005EE17AEE93D0025723B /* ExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +132,16 @@
 			children = (
 				225005BD17AED9AD0025723B /* SJOAppDelegate.h */,
 				225005BE17AED9AD0025723B /* SJOAppDelegate.m */,
+				225005ED17AEE93D0025723B /* ExampleViewController.h */,
+				225005EE17AEE93D0025723B /* ExampleViewController.m */,
+				225005E117AED9D00025723B /* ExampleTableViewController.h */,
+				225005E217AED9D00025723B /* ExampleTableViewController.m */,
+				225005E717AEDD4E0025723B /* SJOStaticCell.h */,
+				225005E817AEDD4E0025723B /* SJOStaticCell.m */,
+				225005E417AEDA220025723B /* SJOStaticTableViewDataSource.h */,
+				225005E517AEDA220025723B /* SJOStaticTableViewDataSource.m */,
+				225005EA17AEE0C60025723B /* SJOStaticSection.h */,
+				225005EB17AEE0C60025723B /* SJOStaticSection.m */,
 				225005C317AED9AD0025723B /* Images.xcassets */,
 				225005C017AED9AD0025723B /* StaticTableViewExample.xcdatamodeld */,
 				225005B517AED9AD0025723B /* Supporting Files */,
@@ -249,8 +274,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				225005E917AEDD4E0025723B /* SJOStaticCell.m in Sources */,
 				225005C217AED9AD0025723B /* StaticTableViewExample.xcdatamodeld in Sources */,
 				225005BB17AED9AD0025723B /* main.m in Sources */,
+				225005EC17AEE0C60025723B /* SJOStaticSection.m in Sources */,
+				225005E617AEDA220025723B /* SJOStaticTableViewDataSource.m in Sources */,
+				225005EF17AEE93D0025723B /* ExampleViewController.m in Sources */,
+				225005E317AED9D00025723B /* ExampleTableViewController.m in Sources */,
 				225005BF17AED9AD0025723B /* SJOAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
