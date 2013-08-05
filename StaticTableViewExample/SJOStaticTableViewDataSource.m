@@ -37,14 +37,16 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[[self class] cellIdentifier]];
     
     SJOStaticCell* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
-    
 
     [cell.textLabel setText:staticCell.title];
     
-    if (staticCell.control) {
-        cell.accessoryView = staticCell.control;
+    if (staticCell.accessoryView) {
+        cell.accessoryView = staticCell.accessoryView;
+        [cell.accessoryView sizeToFit];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     } else if (staticCell.action) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
     
     return cell;
@@ -72,8 +74,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SJOStaticCell* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
-    if (staticCell.control) {
-        [staticCell.control sendActionsForControlEvents:UIControlEventTouchUpInside];
+    if (staticCell.accessoryView) {
+
     } else if (staticCell.action) {
         staticCell.result = staticCell.action(staticCell, nil);
     }

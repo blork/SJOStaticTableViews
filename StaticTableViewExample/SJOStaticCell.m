@@ -10,26 +10,26 @@
 
 @implementation SJOStaticCell
 
-- (id)initWithTitle:(NSString*)title control:(UIControl*)control block:(SJOCellAction)block
+- (id)initWithTitle:(NSString*)title hint:(NSString*)hint accessoryView:(UIView*)accessoryView block:(SJOCellAction)block
 {
     self = [super init];
     if (self) {
         _title = title;
-        _control = control;
+        _accessoryView = accessoryView;
         _action = block;
     }
     return self;
 }
 
-+(instancetype)cellWithTitle:(NSString *)title andControl:(UIControl *)control
++(instancetype)cellWithTitle:(NSString *)title andAccessory:(UIView *)accessoryView
 {
-    SJOStaticCell* cell = [[SJOStaticCell alloc] initWithTitle:title control:control block:nil];
+    SJOStaticCell* cell = [[SJOStaticCell alloc] initWithTitle:title hint:nil accessoryView:accessoryView block:nil];
     return cell;
 }
 
 +(instancetype)cellWithTitle:(NSString *)title andActionBlock:(SJOCellAction)block
 {
-    SJOStaticCell* cell = [[SJOStaticCell alloc] initWithTitle:title control:nil block:block];
+    SJOStaticCell* cell = [[SJOStaticCell alloc] initWithTitle:title hint:nil accessoryView:nil block:block];
     return cell;
 }
 
