@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface SJOStaticTableViewDataSource : NSObject<UITableViewDataSource, UITableViewDelegate>
+@interface SJOStaticTableViewDataSource : NSObject<UITableViewDataSource, UITableViewDelegate, NSFastEnumeration>
 
 @property (nonatomic, strong, readonly) NSArray* sections;
 + (NSString*) cellIdentifier;
 
 - (id)initWithSections:(NSArray*) sections;
+
+- (id)objectForKeyedSubscript:(id <NSCopying>)key;
+- (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
 
 @end

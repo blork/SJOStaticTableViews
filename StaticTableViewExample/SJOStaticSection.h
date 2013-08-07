@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SJOStaticSection : NSObject
+@interface SJOStaticSection : NSObject<NSFastEnumeration>
 
 @property (nonatomic, copy, readonly) NSString* name;
 @property (nonatomic, strong, readonly) NSArray* cells;
 
 -(id)initWithSectionName:(NSString*)name andCells:(NSArray*)cells;
+
+- (id)objectAtIndexedSubscript:(NSUInteger)idx;
+- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
+
 @end

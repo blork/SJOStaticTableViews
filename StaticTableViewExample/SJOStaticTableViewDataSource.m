@@ -12,6 +12,15 @@
 
 @implementation SJOStaticTableViewDataSource
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _sections = [NSArray array];
+    }
+    return self;
+}
+
 - (id)initWithSections:(NSArray*) sections
 {
     self = [super init];
@@ -83,14 +92,36 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-
-}
 
 + (NSString*) cellIdentifier
 {
     return @"SJOStaticTableViewDataSourceCell";
+}
+
+#pragma mark - Subscripting
+
+- (id)objectForKeyedSubscript:(id <NSCopying>)key
+{
+    SJOStaticSection* section = [[self.sections filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", key]] lastObject];
+    if (!section) {
+        self[key] = [NSArray array];
+        return self[key];
+    } else {
+        return section;
+    }
+}
+
+- (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key
+{
+    SJOStaticSection* section = [[SJOStaticSection alloc] initWithSectionName:(NSString*)key andCells:obj];
+    _sections = [NSArray arrayWithArray:[[self.sections mutableCopy] arrayByAddingObject:section]];
+}
+
+#pragma mark - Fast enumeration
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len
+{
+    return [self.sections countByEnumeratingWithState:state objects:buffer count:len];
 }
 
 

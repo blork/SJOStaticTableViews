@@ -20,4 +20,34 @@
     return self;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _cells = [NSArray array];
+    }
+    return self;
+}
+
+#pragma mark - Subscripting
+
+- (id)objectAtIndexedSubscript:(NSUInteger)idx
+{
+    return _cells[idx];
+}
+
+- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
+{
+    NSMutableArray* mutableCopy = [_cells mutableCopy];
+    [mutableCopy setObject:obj atIndexedSubscript:idx];
+    _cells = [NSArray arrayWithArray:mutableCopy];
+}
+
+#pragma mark - Fast enumeration 
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len
+{
+    return [self.cells countByEnumeratingWithState:state objects:buffer count:len];
+}
+
 @end
