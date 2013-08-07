@@ -9,7 +9,7 @@
 #import "ExampleTableViewController.h"
 #import "ExampleViewController.h"
 #import "SJOStaticTableViewDataSource.h"
-#import "SJOStaticCell.h"
+#import "SJOStaticCellData.h"
 #import "SJOStaticSection.h"
 
 @interface ExampleTableViewController ()
@@ -24,58 +24,77 @@
     self = [super initWithStyle:style];
     if (self) {
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[SJOStaticTableViewDataSource cellIdentifier]];
-        
-        __weak ExampleTableViewController* weakSelf = self;
-        
-        SJOStaticCell *cell1 = [SJOStaticCell cellWithTitle:@"Switch Cell" andAccessory:[[UISwitch alloc] init]];
-        SJOStaticCell *cell2 = [SJOStaticCell cellWithTitle:@"Block Cell" andActionBlock:^id(SJOStaticCell *cell, UIViewController *controller) {
-            [weakSelf.navigationController pushViewController:[[ExampleViewController alloc] init] animated:YES];
-            return nil;
-        }];
-        SJOStaticCell *cell3 = [SJOStaticCell cellWithTitle:@"Slider Cell" andAccessory:[[UISlider alloc] init]];
-        SJOStaticCell *cell4 = [SJOStaticCell cellWithTitle:@"Button Cell" andAccessory:[UIButton buttonWithType:UIButtonTypeInfoDark]];
-        
-        
-        
-        UITextField *textField = [[UITextField alloc] init];
-        [textField setDelegate:self];
-        [textField setPlaceholder:@"Placeholder"];
-        [textField setReturnKeyType:UIReturnKeyNext];
-        SJOStaticCell *cell5 = [SJOStaticCell cellWithTitle:@"Text Cell" andAccessory:textField];
-        
-        
-        UITextField *textField2 = [[UITextField alloc] init];
-        [textField2 setDelegate:self];
-        [textField2 setPlaceholder:@"Another Placeholder"];
-        
-        SJOStaticCell *cell6 = [SJOStaticCell cellWithTitle:@"Text Cell" andAccessory:textField2];
-        
-        
-        SJOStaticSection *section = [[SJOStaticSection alloc] initWithSectionName:@"Example Section 1" andCells:@[cell1, cell2, cell3, cell4, cell5, cell6]];
-        
-        SJOStaticCell *doneCell = [SJOStaticCell cellWithTitle:@"Done" andActionBlock:^id(SJOStaticCell *cell, UIViewController *controller) {
-            
-            for (SJOStaticCell* cell in section.cells) {
-                if ([cell.accessoryView isKindOfClass:[UISwitch class]]) {
-                    NSLog(@"%@, %@", cell.title, [((UISwitch*)cell.accessoryView) isOn] ? @"YES" : @"NO");
-                } else if ([cell.accessoryView isKindOfClass:[UITextField class]]) {
-                    NSLog(@"%@, %@", cell.title, [((UITextField*)cell.accessoryView) text]);
-                } else if (cell.result) {
-                    NSLog(@"%@, %@", cell.title, cell.result);
-                }
-            }
-            
-            return nil;
-        }];
-        
-        SJOStaticSection *section2 = [[SJOStaticSection alloc] initWithSectionName:@"Example Section 2" andCells:@[doneCell]];
-        
-        
-        _staticTableViewDataSource = [[SJOStaticTableViewDataSource alloc] initWithSections:@[section, section2]];
+        _staticTableViewDataSource = [[SJOStaticTableViewDataSource alloc] init];
         self.tableView.dataSource = _staticTableViewDataSource;
         self.tableView.delegate = _staticTableViewDataSource;
+        
+        _staticTableViewDataSource.customiseBlock = ^(SJOStaticCellData* staticCellData, UITableViewCell *cell, NSIndexPath* indexPath){
+            cell.backgroundColor = indexPath.row % 2 == 0 ? [UIColor colorWithWhite:0.9 alpha:1] : [UIColor colorWithWhite:0.95 alpha:1];
+            if (staticCellData.style == SJOCellStyleButton) {
+                cell.backgroundColor = [UIColor colorWithRed:0.592 green:0.902 blue:0.482 alpha:1.0];
+            }
+        };
+        
+        [self setupStaticData];
     }
     return self;
+}
+
+-(void) setupStaticData
+{
+    __weak ExampleTableViewController* weakSelf = self;
+    
+    SJOStaticSection* section1 = self.staticTableViewDataSource[@"section1"];
+    
+    section1[0] = [SJOStaticCellData cellWithTitle:@"Switch Cell" andAccessory:[[UISwitch alloc] init]];
+    section1[1] = [SJOStaticCellData cellWithTitle:@"Block Cell" andActionBlock:^id(SJOStaticCellData *cell) {
+        ExampleViewController* vc = [[ExampleViewController alloc] init];
+        vc.resultCell = cell;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+        return nil;
+    } withStyle:SJOCellStyleDefault andAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
+    section1[2] = [SJOStaticCellData cellWithTitle:@"Slider Cell" andAccessory:[[UISlider alloc] init]];
+    section1[3] = [SJOStaticCellData cellWithTitle:@"Button Cell" andAccessory:[UIButton buttonWithType:UIButtonTypeInfoDark]];
+    
+    
+    UITextField *textField = [[UITextField alloc] init];
+    [textField setDelegate:self];
+    [textField setPlaceholder:@"Placeholder"];
+    [textField setReturnKeyType:UIReturnKeyNext];
+    section1[4] = [SJOStaticCellData cellWithTitle:@"Text Cell" andAccessory:textField];
+    
+    
+    UITextField *textField2 = [[UITextField alloc] init];
+    [textField2 setDelegate:self];
+    [textField2 setPlaceholder:@"Another Placeholder"];
+    
+    section1[5] = [SJOStaticCellData cellWithTitle:@"Text Cell" andAccessory:textField2];
+    
+    self.staticTableViewDataSource[@""][0] = [SJOStaticCellData cellWithTitle:@"Done" andActionBlock:^id(SJOStaticCellData *cell) {
+        
+        for (SJOStaticCellData* cell in section1)
+        {
+            if ([cell.accessoryView isKindOfClass:[UISwitch class]])
+            {
+                NSLog(@"%@, %@", cell.title, [((UISwitch*)cell.accessoryView) isOn] ? @"YES" : @"NO");
+            }
+            else if ([cell.accessoryView isKindOfClass:[UISlider class]])
+            {
+                NSLog(@"%@, %f", cell.title, [((UISlider*)cell.accessoryView) value]);
+            }
+            else if ([cell.accessoryView isKindOfClass:[UITextField class]])
+            {
+                NSLog(@"%@, %@", cell.title, [((UITextField*)cell.accessoryView) text]);
+            }
+            else if (cell.result)
+            {
+                NSLog(@"%@, %@", cell.title, cell.result);
+            }
+        }
+        
+        return nil;
+    } withStyle:SJOCellStyleButton andAccessoryType:UITableViewCellAccessoryNone];
 }
 
 - (void)viewDidLoad
@@ -101,7 +120,7 @@
 {
     BOOL hasSeen = NO;
     for (SJOStaticSection* section in self.staticTableViewDataSource.sections) {
-        for (SJOStaticCell* cell in section.cells) {
+        for (SJOStaticCellData* cell in section.cells) {
             if (cell.accessoryView && [cell.accessoryView isKindOfClass:[UITextField class]]) {
                 if ([cell.accessoryView isEqual:textField]) {
                     hasSeen = YES;

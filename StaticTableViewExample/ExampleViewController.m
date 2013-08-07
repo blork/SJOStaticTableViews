@@ -7,6 +7,7 @@
 //
 
 #import "ExampleViewController.h"
+#import "SJOStaticCellData.h"
 
 @interface ExampleViewController ()
 
@@ -19,20 +20,17 @@
     self = [super init];
     if (self) {
         [self.view setBackgroundColor:[UIColor yellowColor]];
+        
     }
     return self;
 }
 
-- (void)viewDidLoad
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewDidAppear:animated];
+    
+    // Set a result for the previous view controller
+    [self.resultCell setResult:@42];
 }
 
 @end

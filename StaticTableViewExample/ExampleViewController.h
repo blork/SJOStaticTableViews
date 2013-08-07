@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class SJOStaticCellData;
 @interface ExampleViewController : UIViewController
-
+@property (nonatomic, strong) SJOStaticCellData *resultCell;
 @end
