@@ -44,7 +44,7 @@
 {
     __weak ExampleTableViewController* weakSelf = self;
     
-    SJOStaticSection* section1 = self.staticTableViewDataSource[@"section1"];
+    SJOStaticSection* section1 = self.staticTableViewDataSource[@"Section 1"];
     
     section1[0] = [SJOStaticCellData cellWithTitle:@"Switch Cell" andAccessory:[[UISwitch alloc] init]];
     section1[1] = [SJOStaticCellData cellWithTitle:@"Block Cell" andActionBlock:^id(SJOStaticCellData *cell) {
@@ -56,7 +56,6 @@
     
     section1[2] = [SJOStaticCellData cellWithTitle:@"Slider Cell" andAccessory:[[UISlider alloc] init]];
     section1[3] = [SJOStaticCellData cellWithTitle:@"Button Cell" andAccessory:[UIButton buttonWithType:UIButtonTypeInfoDark]];
-    
     
     UITextField *textField = [[UITextField alloc] init];
     [textField setDelegate:self];
