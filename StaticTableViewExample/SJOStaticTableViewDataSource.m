@@ -8,7 +8,11 @@
 
 #import "SJOStaticTableViewDataSource.h"
 #import "SJOStaticSection.h"
-#import "SJOStaticCell.h"
+#import "SJOStaticCellData.h"
+
+@interface SJOStaticTableViewDataSource ()
+
+@end
 
 @implementation SJOStaticTableViewDataSource
 
@@ -30,7 +34,6 @@
     return self;
 }
 
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [_sections count];
@@ -45,9 +48,19 @@
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[[self class] cellIdentifier]];
     
-    SJOStaticCell* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
-
+    SJOStaticCellData* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
+    
     [cell.textLabel setText:staticCell.title];
+    
+    
+    switch (staticCell.style) {
+        case SJOCellStyleButton:
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            break;
+        case SJOCellStyleDefault:
+        default:
+            break;
+    }
     
     if (staticCell.accessoryView) {
         cell.accessoryView = staticCell.accessoryView;
@@ -56,6 +69,12 @@
     } else if (staticCell.action) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    }
+    
+    cell.accessoryType = staticCell.accessoryType;
+    
+    if (self.customiseBlock) {
+        self.customiseBlock(staticCell, cell, indexPath);
     }
     
     return cell;
@@ -67,11 +86,6 @@
     return [[_sections objectAtIndex:section] name];
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-//{
-//    return @"Footer";
-//}
-
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -82,11 +96,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SJOStaticCell* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
+    SJOStaticCellData* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
     if (staticCell.accessoryView) {
-
+        
     } else if (staticCell.action) {
-        staticCell.result = staticCell.action(staticCell, nil);
+        staticCell.result = staticCell.action(staticCell);
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
