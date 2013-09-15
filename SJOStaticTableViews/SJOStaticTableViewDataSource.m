@@ -52,7 +52,6 @@
     
     [cell.textLabel setText:staticCell.title];
     
-    
     switch (staticCell.style) {
         case SJOCellStyleButton:
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -62,9 +61,8 @@
             break;
     }
     
-    if (staticCell.accessoryView) {
-        cell.accessoryView = staticCell.accessoryView;
-        [cell.accessoryView sizeToFit];
+    if (staticCell.accessory) {
+        cell.accessoryView = staticCell.accessory;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     } else if (staticCell.action) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -78,6 +76,17 @@
     }
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell.accessoryView isKindOfClass:[UITextField class]] && CGRectIsEmpty(cell.accessoryView.frame)) {
+        cell.accessoryView.frame = CGRectMake(cell.accessoryView.bounds.origin.x, cell.accessoryView.bounds.origin.y, CGRectGetWidth(cell.frame) / 2, CGRectGetHeight(cell.frame));
+        cell.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
+    } else {
+        //[cell.accessoryView sizeToFit];
+    }
+
 }
 
 
@@ -97,8 +106,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SJOStaticCellData* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
-    if (staticCell.accessoryView) {
-        
+    if (staticCell.accessory) {
+        [staticCell.accessory sendActionsForControlEvents:UIControlEventAllEvents];
+        [staticCell.accessory becomeFirstResponder];
     } else if (staticCell.action) {
         staticCell.result = staticCell.action(staticCell);
     }

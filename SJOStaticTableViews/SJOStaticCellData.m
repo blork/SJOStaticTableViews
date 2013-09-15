@@ -11,12 +11,12 @@
 
 @implementation SJOStaticCellData
 
-- (id)initWithTitle:(NSString*)title hint:(NSString*)hint accessoryView:(UIView*)accessoryView style:(SJOCellStyle)style accessoryType:(UITableViewCellAccessoryType)accessoryType block:(SJOCellAction)block
+- (id)initWithTitle:(NSString*)title hint:(NSString*)hint accessory:(UIControl*)accessory style:(SJOCellStyle)style accessoryType:(UITableViewCellAccessoryType)accessoryType block:(SJOCellAction)block
 {
     self = [super init];
     if (self) {
         _title = title;
-        _accessoryView = accessoryView;
+        _accessory = accessory;
         _accessoryType = accessoryType;
         _action = block;
         _style = style;
@@ -24,15 +24,15 @@
     return self;
 }
 
-+(instancetype)cellWithTitle:(NSString *)title andAccessory:(UIView *)accessoryView
++(instancetype)cellWithTitle:(NSString *)title andAccessory:(UIControl *)accessoryView
 {
-    SJOStaticCellData* cell = [[SJOStaticCellData alloc] initWithTitle:title hint:nil accessoryView:accessoryView style:SJOCellStyleDefault accessoryType:UITableViewCellAccessoryNone block:nil];
+    SJOStaticCellData* cell = [[SJOStaticCellData alloc] initWithTitle:title hint:nil accessory:accessoryView style:SJOCellStyleDefault accessoryType:UITableViewCellAccessoryNone block:nil];
     return cell;
 }
 
 +(instancetype) cellWithTitle:(NSString*)title andActionBlock:(SJOCellAction)block withStyle:(SJOCellStyle)style andAccessoryType:(UITableViewCellAccessoryType)accessoryType
 {
-    SJOStaticCellData* cell = [[SJOStaticCellData alloc] initWithTitle:title hint:nil accessoryView:nil style:style accessoryType:accessoryType block:block];
+    SJOStaticCellData* cell = [[SJOStaticCellData alloc] initWithTitle:title hint:nil accessory:nil style:style accessoryType:accessoryType block:block];
     return cell;
 }
 
