@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, SJOCellStyle) {
 @interface SJOStaticCellData : NSObject
 
 @property (nonatomic, copy, readonly) NSString *title;
+@property (nonatomic, assign) NSInteger height;
 @property (nonatomic, strong, readonly) UIControl *accessory;
 @property (nonatomic, assign, readonly) UITableViewCellAccessoryType accessoryType;
 @property (nonatomic, assign, readonly) SJOCellStyle style;

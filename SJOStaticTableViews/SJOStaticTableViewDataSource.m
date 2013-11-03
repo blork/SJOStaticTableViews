@@ -82,6 +82,12 @@
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SJOStaticCellData* staticCell = [[[_sections objectAtIndex:indexPath.section] cells] objectAtIndex:indexPath.row];
+    return staticCell.height ? staticCell.height : 44;
+}
+
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell.accessoryView isKindOfClass:[UITextField class]] && CGRectIsEmpty(cell.accessoryView.frame)) {
