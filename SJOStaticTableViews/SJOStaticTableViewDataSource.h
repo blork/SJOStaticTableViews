@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import UIKit;
 
 @class SJOStaticCellData;
 typedef void (^SJOCellCustomiseBlock) (SJOStaticCellData* staticCellData, UITableViewCell *cell, NSIndexPath* indexPath);
